@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>Angular2 - Express starter</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <base href=".">
+
+        <!-- 1. Load libraries -->
+        <!-- Polyfill(s) for older browsers -->
+        <script src="assets/js/vendor/shim.min.js"></script>
+        <script src="assets/js/vendor/zone.min.js"></script>
+        <script src="assets/js/vendor/Reflect.js"></script>
+        <script src="assets/js/vendor/system.js"></script>
+        <script src="assets/js/vendor/jquery.min.js"></script>
+
+        <!-- 2. Configure SystemJS -->
+        <script src="systemjs.config.js"></script>
+        <script>
+            System.import('app').catch(function(err) { console.error(err); });
+        </script>
+    </head>
+
+    <body>
+      <my-app>Loading...</my-app>
+      <!--  Production mod
+      <script src="assets/js/bundle.min.js"></script>
+      -->
+    </body>
+</html>
