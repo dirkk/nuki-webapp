@@ -1,8 +1,2 @@
 node_modules
-.idea
-typings
-server/**/*.js
-server/**/*.js.map
-client/**/*.js
-client/**/*.js.map
-/npm-debug.log
+client/bundle.js
