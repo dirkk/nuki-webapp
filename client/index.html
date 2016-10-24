@@ -1,37 +1,23 @@
 <html>
-    <head>
-        <title>Angular2 - Express starter</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <base href=".">
-        <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.css">
+  <head>
+    <title>Nuki WebApp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href=".">
+    <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.css">
 
-        <script src="/vendor/vue/dist/vue.js"></script>
-        <script src="/vendor/vue-router/dist/vue-router.js"></script>
-        <!-- 1. Load libraries -->
-        <!-- Polyfill(s) for older browsers -->
-<!--
-        <script src="assets/js/vendor/shim.min.js"></script>
-        <script src="assets/js/vendor/zone.min.js"></script>
-        <script src="assets/js/vendor/Reflect.js"></script>
-        <script src="assets/js/vendor/system.js"></script>
-        <script src="assets/js/vendor/jquery.min.js"></script>
--->
+    <script src="/vendor/vue/dist/vue.js"></script>
+    <script src="/vendor/vue-router/dist/vue-router.js"></script>
+  </head>
 
-        <!-- 2. Configure SystemJS -->
-<!--
-        <script src="systemjs.config.js"></script>
-        <script>
-            System.import('app').catch(function(err) { console.error(err); });
-        </script>
--->
-    </head>
-
-    <body>
-      <div class="container">
-        <div id="app">
-          {{ message }}
-        </div>
-      </div>
-      <script src="client.js"></script>
-    </body>
+  <body>
+    <div class="container" id="app">
+      <p>
+        <router-link to="/users">Benutzerverwaltung</router-link>
+        <router-link to="/state"></router-link>
+        <router-link to="/logout">Logout</router-link>
+      </p>
+      <router-view></router-view>
+    </div>
+    <script src="bundle.js"></script>
+  </body>
 </html>
