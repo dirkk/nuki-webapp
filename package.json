@@ -6,7 +6,7 @@
   "private": true,
   "license": "GPL-3.0",
   "scripts": {
-    "start": "concurrently \"nodemon ./server/app.js\" \"webpack\" "
+    "start": "concurrently \"nodemon ./server/app.js\" \"webpack --watch\" "
   },
   "engines": {
     "node": ">= 5.4.1"
