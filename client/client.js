@@ -1,21 +1,18 @@
-const NewUser = require("./NewUser.js")
-const UserManagement = require("./UserManagement.js")
-const Protocol = require("./Protocol.js")
-const State = { template: '<div>foo</div>' }
-const Logout = { template: '<div>foo</div>' }
-const Login = require("./Login.js")
-
-const routes = [
-  { path: '/users', component: UserManagement },
-  { path: '/new-user', component: NewUser },
-  { path: '/protocol', component: Protocol },
-  { path: '/state', component: State },
-  { path: '/logout', component: Logout },
-  { path: '/', component: Login }
-]
+const routes = require("./Routing.js");
+const User = require("./User.js");
+var VueCookie = require('vue-cookie');
 
 const router = new VueRouter({ routes });
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth) && !User.isLoggedIn()
+    || to.matched.some(record => record.meta.requiresAdminAuth) && !User.isLoggedInAdmin()) {
+    next({ path: '/' });
+  } else {
+    next();
+  }
+});
 
+Vue.use(VueCookie);
 const app = new Vue({
   router
 }).$mount('#app');

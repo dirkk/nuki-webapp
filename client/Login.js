@@ -1,4 +1,6 @@
-module.exports = { 
+var User = require("./User.js");
+
+module.exports = {
   name: "Login",
   data: function () {
     return {
@@ -18,13 +20,15 @@ module.exports = {
           <div class="form-group">\
             <label for="name" class="control-label col-sm-3">Name</label>\
             <div class="col-sm-9">\
-              <input type="text" id="name" class="form-control" v-model="name"/>\
+              <input type="text" id="name" class="form-control" v-model="name"\
+                @keyup.enter="login"/>\
             </div>\
           </div>\
           <div class="form-group">\
             <label for="password" class="control-label col-sm-3">Password</label>\
             <div class="col-sm-9">\
-              <input type="password" id="password" class="form-control" v-model="password"/>\
+              <input type="password" id="password" class="form-control"\
+                v-model="password" @keyup.enter="login"/>\
             </div>\
           </div>\
         </form>\
@@ -36,10 +40,10 @@ module.exports = {
   methods: {
     login: function (event) {
       this.incorrect = false;
-      this.$http.post('/api/login', { name: this.name, password: this.password}).then((response) => {
-        console.log("login successful");
-      }, (response) => {
-        console.log("login failed");
+      this.$http.post('/api/login', { user: this.name, password: this.password}).then(response => {
+        User.setUser(response.body);
+        this.$router.push("state");
+      }, response => {
         this.incorrect = true;
       });
     }

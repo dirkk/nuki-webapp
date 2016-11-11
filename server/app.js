@@ -28,8 +28,8 @@ var protocol = db.get('protocol');
 app.use(express.static('client'));
 app.use('/vendor', express.static('node_modules'));
 
-app.use(session({ 
-  secret: 'keyboard cat', 
+app.use(session({
+  secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
   cookie: { maxAge: 60000 }
@@ -100,7 +100,7 @@ function isValidPassword(password) {
 app.post('/api/login', jsonParser, function (req, res) {
   var body = req.body;
   var user = users.find({ "name": body.user }).value();
-  
+
   if (!user) {
     res.status(400).send("Bad username/password");
     return;
@@ -113,7 +113,8 @@ app.post('/api/login', jsonParser, function (req, res) {
       } else {
         req.session.userId = user.name;
         if (!!user.admin) req.session.admin = true;
-        res.status(200).send("OK");
+        res.set('Content-Type', 'application/json');
+        res.status(200).send({user: user.name, admin: user.admin});
       }
     } else {
       res.status(400).send("Bad username/password");
@@ -182,6 +183,23 @@ app.post('/api/changePassword', checkAuthAdmin, jsonParser, function (req, res) 
   } else {
     res.status(400).send("User does not exist.");
   }
+});
+
+app.get('/api/users', function (req, res) {
+  var count = !req.query.count ? 25 : Number(req.query.count);
+  var skip  = !req.query.skip ? 0 : Number(req.query.skip);
+
+  res.set('Content-Type', 'application/json');
+  res.send(users
+    .slice(skip, skip + count)
+    .value()
+    .map(u => { return {
+      name: u.name,
+      mail: u.mail,
+      admin: u.admin,
+      times: u.times
+    }})
+  );
 });
 
 // protocol

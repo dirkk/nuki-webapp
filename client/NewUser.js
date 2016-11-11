@@ -1,4 +1,4 @@
-module.exports = { 
+module.exports = {
   name: "NewUser",
   data: function () {
     return {
@@ -9,6 +9,7 @@ module.exports = {
     };
   },
   template: '\
+  <h1>hgdsf</h1>\
     <form class="form-horizontal">\
       <div class="form-group">\
         <label for="name" class="control-label col-sm-3">Name</label>\
@@ -25,18 +26,18 @@ module.exports = {
       <div class="form-group">\
         <label for="admin" class="control-label col-sm-3">Is Administrator?</label>\
         <div class="col-sm-9">\
-          <checkbox id="admin" class="form-control" v-model="admin"/>\
+          <input type="checkbox" id="admin" class="form-control" v-model="admin"/>\
         </div>\
       </div>\
     </form>',
   methods: {
     save: function (event) {
-      this.$http.post('/api/newUser', { 
-        name: this.name, 
+      this.$http.post('/api/newUser', {
+        name: this.name,
         password: this.password,
         admin: this.admin,
         times: this.times
-      }).then((response) => {
+      }).then(response => {
         console.log("User added");
       }, (response) => {
         console.log("User could not be added." + response);

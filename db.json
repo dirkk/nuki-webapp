@@ -1,4 +1,10 @@
 {
-  "users": [],
+  "users": [
+    {
+      "name": "admin",
+      "password": "$2a$10$is4O1nz36LEMwCZACjuez.1rexHuw/vy5O9K6/xxPBVSxGGa4AXse",
+      "admin": true
+    }
+  ],
   "protocol": []
 }
