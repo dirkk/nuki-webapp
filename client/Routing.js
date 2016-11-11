@@ -35,5 +35,12 @@ module.exports = [{
   }
 }, {
   path: '/',
-  component: Login
+  component: Login,
+  beforeEnter: (to, from, next) => {
+    if (User.isLoggedIn()) {
+      next({ path: '/state' });
+    } else {
+      next();
+    }
+  }
 }];
