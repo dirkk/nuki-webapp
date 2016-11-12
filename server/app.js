@@ -46,7 +46,7 @@ app.use(session({
  */
 function checkAuth(req, res, next) {
   if (!req.session.userId) {
-    res.send('You are not authorized to view this page');
+    res.status(401).send('You are not authorized to view this page');
   } else {
     res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
     next();
@@ -62,7 +62,7 @@ function checkAuth(req, res, next) {
  */
 function checkAuthAdmin(req, res, next) {
   if (!req.session.userId || !req.session.admin) {
-    res.send('You are not authorized to view this page');
+    res.status(401).send('You are not authorized to view this page');
   } else {
     res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
     next();
@@ -109,7 +109,7 @@ app.post('/api/login', jsonParser, function (req, res) {
   bcrypt.compare(body.password, user.password, function(err, hashFound) {
     if (!!user && hashFound) {
       if (!checkAuthTime(user.times)) {
-        res.status(400).send("You are not authorized for this time.");
+        res.status(401).send("You are not authorized for this time.");
       } else {
         req.session.userId = user.name;
         if (!!user.admin) req.session.admin = true;

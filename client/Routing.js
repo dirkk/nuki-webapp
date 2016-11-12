@@ -10,15 +10,15 @@ module.exports = [{
   component: UsersListing,
   meta: { requiresAdminAuth: true }
 }, {
-    path: 'user/new',
-    name: 'newUser',
-    component: NewUser,
-    meta: { requiresAdminAuth: true },
+  path: '/user/new',
+  name: 'newUser',
+  component: NewUser,
+  meta: { requiresAdminAuth: true },
 }, {
-    path: 'user/:name',
-    name: 'editUser',
-    component: NewUser,
-    meta: { requiresAdminAuth: true },
+  path: '/user/:name',
+  name: 'editUser',
+  component: NewUser,
+  meta: { requiresAdminAuth: true },
 }, {
   path: '/protocol',
   component: Protocol,

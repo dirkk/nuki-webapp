@@ -9,29 +9,49 @@ module.exports = {
     };
   },
   template: '\
-  <h1>hgdsf</h1>\
+  <div>\
+    <h1>New User</h1>\
     <form class="form-horizontal">\
       <div class="form-group">\
         <label for="name" class="control-label col-sm-3">Name</label>\
-        <div class="col-sm-9">\
-          <input type="text" id="name" class="form-control" v-model="name"/>\
+        <div class="col-sm-6">\
+          <input type="text" id="name" class="form-control" v-model.trim="name"/>\
         </div>\
       </div>\
       <div class="form-group">\
         <label for="mail" class="control-label col-sm-3">Mail</label>\
-        <div class="col-sm-9">\
-          <input type="text" id="mail" class="form-control" v-model="mail"/>\
+        <div class="col-sm-6">\
+          <input type="email" id="mail" class="form-control" v-model.trim="mail"/>\
         </div>\
       </div>\
       <div class="form-group">\
-        <label for="admin" class="control-label col-sm-3">Is Administrator?</label>\
-        <div class="col-sm-9">\
-          <input type="checkbox" id="admin" class="form-control" v-model="admin"/>\
+        <div class="col-sm-offset-3 col-sm-6">\
+          <div class="checkbox">\
+            <label>\
+              <input type="checkbox" id="admin" v-model="admin"> Is Administrator?\
+            </label>\
+          </div>\
         </div>\
       </div>\
-    </form>',
+      <div class="form-group">\
+        <div class="col-sm-offset-3 col-sm-6">\
+          <button type="submit" class="btn btn-primary" \
+            v-bind:class="{ disabled: !canBeSaved}"\
+            @click="save">\
+            Create\
+          </button>\
+        </div>\
+      </div>\
+    </form>\
+  </div>',
+  computed: {
+    canBeSaved: function () {
+      return !!this.name && !!this.mail;
+    }
+  },
   methods: {
     save: function (event) {
+      if (!this.canBeSaved) return;
       this.$http.post('/api/newUser', {
         name: this.name,
         password: this.password,
