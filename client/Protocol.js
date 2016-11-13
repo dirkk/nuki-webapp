@@ -15,7 +15,7 @@ module.exports = {
       <tbody>\
         <tr v-for="entry in entries">\
           <td>{{ entry.text }}</td>\
-          <td>{{ entry.date }}</td>\
+          <td>{{ entry.date | date(\'LLL\') }}</td>\
         </tr>\
       </tbody>\
     </table>\

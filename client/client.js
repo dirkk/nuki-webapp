@@ -1,6 +1,7 @@
 const routes = require("./Routing.js");
 const User = require("./User.js");
-var VueCookie = require('vue-cookie');
+const DateFilter = require("./Date.js");
+const VueCookie = require('vue-cookie');
 
 const router = new VueRouter({ routes });
 router.beforeEach((to, from, next) => {
@@ -13,6 +14,7 @@ router.beforeEach((to, from, next) => {
 });
 
 Vue.use(VueCookie);
+Vue.use(DateFilter);
 const app = new Vue({
   router
 }).$mount('#app');

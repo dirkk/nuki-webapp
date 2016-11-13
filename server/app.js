@@ -117,6 +117,9 @@ app.post('/api/login', jsonParser, function (req, res) {
       } else {
         req.session.userId = user.name;
         if (!!user.admin) req.session.admin = true;
+
+        addProtocol("User '" + req.session.userId + "' logged in.", req);
+
         res.set('Content-Type', 'application/json');
         res.status(200).send({user: user.name, admin: user.admin});
       }
@@ -128,6 +131,7 @@ app.post('/api/login', jsonParser, function (req, res) {
 
 // logout a user
 app.post('/api/logout', function (req, res) {
+  addProtocol("User '" + req.session.userId + "' logged out.", req);
   delete req.session.userId;
   req.session.destroy(function(err) {
     if (!err) {
@@ -166,6 +170,8 @@ app.post('/api/newUser', jsonParser, function (req, res) {
       if (!!times) newUser.times = times;
 
       users.push(newUser).value();
+      addProtocol("User '" + name + "' was added.", req);
+
       res.set('Content-Type', 'application/json');
       res.status(200).send(newUser);
     });
@@ -196,6 +202,7 @@ app.delete('/api/user', jsonParser, function (req, res) {
 
   if (!!users.find({ "name": name }).value()) {
     users.remove({ "name": name }).value();
+    addProtocol("User '" + name + "' was deleted.", req);
     res.status(200).send();
   } else {
     res.status(400).send("User does not exist.");
