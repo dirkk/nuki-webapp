@@ -21,10 +21,12 @@ module.exports = {
       <div class="col-xs-12">\
         <table class="table table-striped table-hover">\
           <thead>\
-            <th class="col-xs-6">Name</th>\
-            <th class="col-xs-4">Mail</th>\
-            <th class="col-xs-1">Admin</th>\
-            <th class="col-xs-1"></th>\
+            <tr>\
+              <th class="col-xs-6">Name</th>\
+              <th class="col-xs-4">Mail</th>\
+              <th class="col-xs-1">Admin</th>\
+              <th class="col-xs-1"></th>\
+            </tr>\
           </thead>\
           <tbody>\
             <tr v-for="user in users">\

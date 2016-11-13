@@ -9,8 +9,10 @@ module.exports = {
   <div>\
     <table class="table table-striped table-hover">\
       <thead>\
-        <th class="col-xs-7">Text</th>\
-        <th class="col-xs-5">Date</th>\
+        <tr>\
+          <th class="col-xs-7">Text</th>\
+          <th class="col-xs-5">Date</th>\
+        </tr>\
       </thead>\
       <tbody>\
         <tr v-for="entry in entries">\

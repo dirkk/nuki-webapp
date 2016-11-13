@@ -249,6 +249,7 @@ app.get('/api/protocol', function (req, res) {
   res.set('Content-Type', 'application/json');
   res.send(protocol
     .sortBy('date')
+    .reverse()
     .slice(skip, skip + count)
     .value()
   );
