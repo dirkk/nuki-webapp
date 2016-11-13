@@ -200,12 +200,16 @@ app.post('/api/acceptInvitation', jsonParser, function (req, res) {
 app.delete('/api/user', jsonParser, function (req, res) {
   var name = req.query.name;
 
-  if (!!users.find({ "name": name }).value()) {
-    users.remove({ "name": name }).value();
-    addProtocol("User '" + name + "' was deleted.", req);
-    res.status(200).send();
+  if (req.session.userId === name) {
+    res.status(400).send("You can't delete your own user.");
   } else {
-    res.status(400).send("User does not exist.");
+    if (!!users.find({ "name": name }).value()) {
+      users.remove({ "name": name }).value();
+      addProtocol("User '" + name + "' was deleted.", req);
+      res.status(200).send();
+    } else {
+      res.status(400).send("User does not exist.");
+    }
   }
 });
 

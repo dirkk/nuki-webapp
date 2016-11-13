@@ -1,3 +1,5 @@
+var User = require("./User.js");
+
 module.exports = {
   name: "UsersListing",
   data: function () {
@@ -40,7 +42,8 @@ module.exports = {
                   :to="{ name: \'editUser\', params: { name: 123 }}">\
                   <i class="glyphicon glyphicon-pencil"/>\
                 </router-link>\
-                <button class="btn btn-danger btn-sm" @click="deleteUser(user)">\
+                <button class="btn btn-danger btn-sm"\
+                        :disabled="canDelete(user)" @click="deleteUser(user)">\
                   <i class="glyphicon glyphicon-trash"/>\
                 </button>\
               </td>\
@@ -56,6 +59,9 @@ module.exports = {
     });
   },
   methods: {
+    canDelete: user => {
+      return User.getUser() === user.name;
+    },
     deleteUser: function (user) {
       var confirm = window.confirm("Wollen Sie den Benutzer wirklich löschen?");
 

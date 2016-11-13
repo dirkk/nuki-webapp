@@ -3,6 +3,9 @@ module.exports = {
     Vue.cookie.set('user', newValue.user, 1);
     Vue.cookie.set('admin', !!newValue.admin, 1);
   },
+  getUser () {
+    return Vue.cookie.get('user');
+  },
   clearUser () {
     Vue.cookie.delete('user');
   },
