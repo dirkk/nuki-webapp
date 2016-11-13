@@ -6,6 +6,7 @@ var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
 var bcrypt = require('bcrypt');
 var session = require('express-session')
+var crypto = require('crypto');
 
 const PORT = 3000;
 const SALT_ROUNDS= 10;
@@ -14,6 +15,9 @@ const NUKI_PORT = "9112";
 const NUKI_TOKEN = "e725g9";
 
 var app = express();
+
+const config = low('config.json');
+// const GOOGLE_MAIL_AUTH = config.get("GOOGLE_MAIL").value();
 
 // Start database using file-async storage
 var db = low('db.json', {
@@ -134,31 +138,59 @@ app.post('/api/logout', function (req, res) {
   })
 });
 
-app.post('/api/newUser', checkAuthAdmin, jsonParser, function (req, res) {
+app.post('/api/newUser', jsonParser, function (req, res) {
   var body = req.body;
-  var user = body.user.trim();
-  var password = body.password.trim();
+  var name = body.name;
+  var mail = body.mail;
   var admin = !!body.admin;
   var times = body.times;
 
-  if (!!users.find({ "name": user }).value()) {
-    res.status(400).send("User already exists.");
+  if (!!users.find({ "name": name }).value()) {
+    res.status(400).send("Username already exists.");
+  } else if (!!users.find({ "mail": mail }).value()) {
+    res.status(400).send("Mail already exists.");
   } else {
-    bcrypt.hash(password, SALT_ROUNDS, function(err, hash) {
+    crypto.randomBytes(12, function(err, buffer) {
+      var token = buffer.toString('hex');
+      var validDate = new Date();
+      validDate.setDate(validDate.getDate() + 2);
       var newUser = {
-        name: user,
-        password: hash,
-        admin: admin
+        name: name,
+        admin: admin,
+        invitation: {
+          token: token,
+          validUntil: validDate
+        }
       };
       if (!!times) newUser.times = times;
 
       users.push(newUser).value();
+      res.set('Content-Type', 'application/json');
+      res.status(200).send(newUser);
+    });
+  }
+});
+
+app.post('/api/acceptInvitation', jsonParser, function (req, res) {
+  var name = body.user.trim();
+  var token = body.token.trim();
+  var newPassword = body.password.trim();
+
+  var user = users.find({ "name": name }).value();
+  if (!user || user.invitation.token !== token) {
+    res.status(401).send("Invitation not found.");
+  } else if (user.invitation.validUntil > new Date()) {
+    res.status(401).send("The invitation is not valid anymore.");
+  } else {
+    bcrypt.hash(password, SALT_ROUNDS, function(err, hash) {
+      delete user.invitation;
+      user.password = hash;
       res.status(200).send();
     });
   }
 });
 
-app.post('/api/deleteUser', checkAuthAdmin, jsonParser, function (req, res) {
+app.post('/api/deleteUser', jsonParser, function (req, res) {
   var body = req.body;
   var user = body.user.trim();
 
@@ -170,7 +202,7 @@ app.post('/api/deleteUser', checkAuthAdmin, jsonParser, function (req, res) {
   }
 });
 
-app.post('/api/changePassword', checkAuthAdmin, jsonParser, function (req, res) {
+app.post('/api/changePassword', jsonParser, function (req, res) {
   var body = req.body;
   var user = body.user.trim();
   var newPassword= body.password.trim();
@@ -203,7 +235,7 @@ app.get('/api/users', function (req, res) {
 });
 
 // protocol
-app.get('/api/protocol', checkAuthAdmin, function (req, res) {
+app.get('/api/protocol', function (req, res) {
   var count = !req.query.count ? 25 : Number(req.query.count);
   var skip  = !req.query.skip ? 0 : Number(req.query.skip);
 

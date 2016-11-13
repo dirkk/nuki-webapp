@@ -5,7 +5,9 @@ module.exports = {
       name: null,
       mail: null,
       admin: false,
-      times: []
+      times: [],
+      invitation: null,
+      error: null
     };
   },
   template: '\
@@ -43,24 +45,41 @@ module.exports = {
         </div>\
       </div>\
     </form>\
+    <div class="alert alert-success" v-if="invitation">\
+      Der Nutzer wurde erfolgreich erstellt. Der Einladungscode ist \
+      {{ invitation }}. <a class="alert-link" :href="mailTo">Einladung verschicken.</a>\
+    </div>\
+    <div class="alert alert-danger" v-if="error">\
+      {{ error }}\
+    </div>\
   </div>',
   computed: {
     canBeSaved: function () {
-      return !!this.name && !!this.mail;
+      return !!this.name && !!this.mail && !this.invitation;
+    },
+    mailTo: function () {
+      var subject = "Zugang zum Café Mondial";
+      var body = encodeURIComponent("Hallo " + this.name + ",\n\nDein Einladungscode ist " +
+        this.invitation + " und du kannst diese unter " + window.location.protocol +
+        "//" + window.location.host + "/acceptInvitation?token=" + this.invitation +
+        " annehmen.\n\nViele Grüße\nCafé Mondial");
+      return "mailto:" + this.mail + "?subject=" + subject + "&body=" + body;
     }
   },
   methods: {
     save: function (event) {
       if (!this.canBeSaved) return;
+
+      this.error = null;
+      this.invitation = null;
       this.$http.post('/api/newUser', {
         name: this.name,
-        password: this.password,
         admin: this.admin,
-        times: this.times
+        mail: this.mail
       }).then(response => {
-        console.log("User added");
-      }, (response) => {
-        console.log("User could not be added." + response);
+        this.invitation = response.body.invitation.token;
+      }, response => {
+        this.error = response.body;
       });
     }
   }
