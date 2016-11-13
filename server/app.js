@@ -157,6 +157,7 @@ app.post('/api/newUser', jsonParser, function (req, res) {
       var newUser = {
         name: name,
         admin: admin,
+        mail: mail,
         invitation: {
           token: token,
           validUntil: validDate
@@ -190,12 +191,11 @@ app.post('/api/acceptInvitation', jsonParser, function (req, res) {
   }
 });
 
-app.post('/api/deleteUser', jsonParser, function (req, res) {
-  var body = req.body;
-  var user = body.user.trim();
+app.delete('/api/user', jsonParser, function (req, res) {
+  var name = req.query.name;
 
-  if (!!users.find({ "name": user }).value()) {
-    users.remove({ "name": user }).value();
+  if (!!users.find({ "name": name }).value()) {
+    users.remove({ "name": name }).value();
     res.status(200).send();
   } else {
     res.status(400).send("User does not exist.");
