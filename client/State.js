@@ -9,9 +9,9 @@ module.exports = {
     <div class="row">\
       <div class="col-xs-12">\
         <div class="circle" @click="toggle">\
-          <span v-if="open">Offen</span>\
-          <span v-if="!open">Geschlossen</span>\
-          <span v-if="open === undefined">Unbekannt</span>\
+          <span v-if="open">{{ $t("state.open") }}</span>\
+          <span v-if="open === false">{{ $t("state.closed") }}</span>\
+          <span v-if="open === undefined">{{ $t("state.unknown") }}</span>\
         </div>\
       </div>\
     </div>',

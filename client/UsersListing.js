@@ -13,7 +13,7 @@ module.exports = {
       <div class="col-xs-6">\
         <div class="btn-group">\
           <router-link class="btn btn-default" :to="{ path: \'user/new\' }">\
-            <i class="glyphicon glyphicon-plus" /> Neu\
+            <i class="glyphicon glyphicon-plus" /> {{ $t("users.new") }}\
           </router-link>\
         </div>\
       </div>\
@@ -22,9 +22,9 @@ module.exports = {
     <table class="table table-striped table-hover" style="margin-top: 20px;">\
       <thead>\
         <tr>\
-          <th class="col-sm-5">Name</th>\
-          <th class="col-sm-4">Mail</th>\
-          <th class="col-sm-1">Admin</th>\
+          <th class="col-sm-5">{{ $t("users.name") }}</th>\
+          <th class="col-sm-4">{{ $t("users.mail") }}</th>\
+          <th class="col-sm-1">{{ $t("users.admin") }}</th>\
           <th class="col-sm-2"></th>\
         </tr>\
       </thead>\
@@ -59,13 +59,13 @@ module.exports = {
       return User.getUser() === user.name;
     },
     deleteUser: function (user) {
-      var confirm = window.confirm("Wollen Sie den Benutzer wirklich löschen?");
+      var confirm = window.confirm(Vue.t("users.messages.confirmDelete"));
 
       if (confirm) {
         this.$http.delete("/api/user?name=" + user.name).then(response => {
           this.users = this.users.filter(u => u !== user);
         }, response => {
-          window.alert("Benutzer konnte nicht gelöscht werden. Meldung: " + response.body);
+          window.alert(Vue.t("users.messages.couldNotDelete") + response.body);
         });
       }
     }

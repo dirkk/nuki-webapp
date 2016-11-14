@@ -19,21 +19,21 @@
       <nav class="navbar navbar-default">
         <div class="container-fluid">
           <div class="navbar-header">
-            <a class="navbar-brand" href="#">Nuki WebApp</a>
+            <a class="navbar-brand" href="#">{{ $t("name") }}</a>
           </div>
           <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
               <li>
-                <router-link :to="{ path: '/state' }">Nuki</router-link>
+                <router-link :to="{ path: '/state' }">{{ $t("routing.state") }}</router-link>
               </li>
               <li>
-                <router-link :to="{ path: '/users' }">Benutzerverwaltung</router-link>
+                <router-link :to="{ path: '/users' }">{{ $t("routing.users") }}</router-link>
               </li>
               <li>
-                <router-link :to="{ path: '/protocol' }">Protokoll</router-link>
+                <router-link :to="{ path: '/protocol' }">{{ $t("routing.protocol") }}</router-link>
               </li>
               <li>
-                <router-link :to="{ path: '/logout' }">Logout</router-link>
+                <router-link :to="{ path: '/logout' }">{{ $t("routing.logout") }}</router-link>
               </li>
             </ul>
           </div>

@@ -11,21 +11,21 @@ module.exports = {
   },
   template: '\
     <div class="panel panel-default">\
-      <div class="panel-heading">Login</div>\
+      <div class="panel-heading">{{ $t("login.login") }}</div>\
       <div class="panel-body">\
         <div class="alert alert-danger" role="alert" v-if="incorrect">\
-          Name and/or password incorrect\
+          {{ $t("login.messages.incorrect") }}\
         </div>\
         <form class="form-horizontal">\
           <div class="form-group">\
-            <label for="name" class="control-label col-sm-3">Name</label>\
+            <label for="name" class="control-label col-sm-3">{{ $t("login.name") }}</label>\
             <div class="col-sm-9">\
               <input type="text" id="name" class="form-control" v-model="name"\
                 @keyup.enter="login"/>\
             </div>\
           </div>\
           <div class="form-group">\
-            <label for="password" class="control-label col-sm-3">Password</label>\
+            <label for="password" class="control-label col-sm-3">{{ $t("login.password") }}</label>\
             <div class="col-sm-9">\
               <input type="password" id="password" class="form-control"\
                 v-model="password" @keyup.enter="login"/>\
@@ -34,7 +34,7 @@ module.exports = {
         </form>\
       </div>\
       <div class="panel-footer">\
-        <button class="btn btn-primary" @click="login">Login</button>\
+        <button class="btn btn-primary" @click="login">{{ $t("login.login") }}</button>\
       </div>\
     </div>',
   methods: {

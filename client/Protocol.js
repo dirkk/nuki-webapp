@@ -10,8 +10,8 @@ module.exports = {
     <table class="table table-striped table-hover">\
       <thead>\
         <tr>\
-          <th class="col-sm-7">Text</th>\
-          <th class="col-sm-5">Date</th>\
+          <th class="col-sm-7">{{ $t("protocol.text") }}</th>\
+          <th class="col-sm-5">{{ $t("protocol.date") }}</th>\
         </tr>\
       </thead>\
       <tbody>\

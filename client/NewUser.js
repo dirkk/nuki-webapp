@@ -12,16 +12,16 @@ module.exports = {
   },
   template: '\
   <div>\
-    <h1>New User</h1>\
+    <h1>{{ $t("users.newUser") }}</h1>\
     <form class="form-horizontal">\
       <div class="form-group">\
-        <label for="name" class="control-label col-sm-3">Name</label>\
+        <label for="name" class="control-label col-sm-3">{{ $t("users.name") }}</label>\
         <div class="col-sm-6">\
           <input type="text" id="name" class="form-control" v-model.trim="name"/>\
         </div>\
       </div>\
       <div class="form-group">\
-        <label for="mail" class="control-label col-sm-3">Mail</label>\
+        <label for="mail" class="control-label col-sm-3">{{ $t("users.mail") }}</label>\
         <div class="col-sm-6">\
           <input type="email" id="mail" class="form-control" v-model.trim="mail"/>\
         </div>\
@@ -30,7 +30,7 @@ module.exports = {
         <div class="col-sm-offset-3 col-sm-6">\
           <div class="checkbox">\
             <label>\
-              <input type="checkbox" id="admin" v-model="admin"> Is Administrator?\
+              <input type="checkbox" id="admin" v-model="admin"> {{ $t("users.isAdministrator") }}\
             </label>\
           </div>\
         </div>\
@@ -40,7 +40,7 @@ module.exports = {
           <button type="submit" class="btn btn-primary" \
             v-bind:class="{ disabled: !canBeSaved}"\
             @click="save">\
-            Create\
+            {{ $t("users.create") }}\
           </button>\
         </div>\
       </div>\

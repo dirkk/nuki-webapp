@@ -3,7 +3,7 @@ exports.install = function (Vue, options) {
     if (!date) {
       return "N/A";
     }
-    moment.locale("de");
+    moment.locale(Vue.config.lang);
     return moment(date).format(format);
   });
 };
