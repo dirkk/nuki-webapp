@@ -19,39 +19,35 @@ module.exports = {
       </div>\
     </div>\
 \
-    <div class="row" style="margin-top: 20px;">\
-      <div class="col-xs-12">\
-        <table class="table table-striped table-hover">\
-          <thead>\
-            <tr>\
-              <th class="col-xs-6">Name</th>\
-              <th class="col-xs-4">Mail</th>\
-              <th class="col-xs-1">Admin</th>\
-              <th class="col-xs-1"></th>\
-            </tr>\
-          </thead>\
-          <tbody>\
-            <tr v-for="user in users">\
-              <td>{{ user.name }}</td>\
-              <td>{{ user.mail }}</td>\
-              <td>\
-                <i class="glyphicon glyphicon-ok" v-if="user.admin" />\
-              </td>\
-              <td>\
-                <router-link class="btn btn-warning btn-sm" disabled=""\
-                  :to="{ name: \'editUser\', params: { name: 123 }}">\
-                  <i class="glyphicon glyphicon-pencil"/>\
-                </router-link>\
-                <button class="btn btn-danger btn-sm"\
-                        :disabled="canDelete(user)" @click="deleteUser(user)">\
-                  <i class="glyphicon glyphicon-trash"/>\
-                </button>\
-              </td>\
-            </tr>\
-          </tbody>\
-        </table>\
-      </div>\
-    </div>\
+    <table class="table table-striped table-hover" style="margin-top: 20px;">\
+      <thead>\
+        <tr>\
+          <th class="col-sm-5">Name</th>\
+          <th class="col-sm-4">Mail</th>\
+          <th class="col-sm-1">Admin</th>\
+          <th class="col-sm-2"></th>\
+        </tr>\
+      </thead>\
+      <tbody>\
+        <tr v-for="user in users">\
+          <td>{{ user.name }}</td>\
+          <td>{{ user.mail }}</td>\
+          <td>\
+            <i class="glyphicon glyphicon-ok" v-if="user.admin" />\
+          </td>\
+          <td>\
+            <router-link class="btn btn-warning btn-sm" disabled=""\
+              :to="{ name: \'editUser\', params: { name: 123 }}">\
+              <i class="glyphicon glyphicon-pencil"/>\
+            </router-link>\
+            <button class="btn btn-danger btn-sm"\
+                    :disabled="canDelete(user)" @click="deleteUser(user)">\
+              <i class="glyphicon glyphicon-trash"/>\
+            </button>\
+          </td>\
+        </tr>\
+      </tbody>\
+    </table>\
   </div>',
   created: function () {
     this.$http.get("/api/users").then(response => {

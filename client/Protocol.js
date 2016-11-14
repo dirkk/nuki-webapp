@@ -10,8 +10,8 @@ module.exports = {
     <table class="table table-striped table-hover">\
       <thead>\
         <tr>\
-          <th class="col-xs-7">Text</th>\
-          <th class="col-xs-5">Date</th>\
+          <th class="col-sm-7">Text</th>\
+          <th class="col-sm-5">Date</th>\
         </tr>\
       </thead>\
       <tbody>\
