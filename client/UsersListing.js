@@ -4,7 +4,8 @@ module.exports = {
   name: "UsersListing",
   data: function () {
     return {
-      users: []
+      users: [],
+      descending: false,
     };
   },
   template: '\
@@ -22,9 +23,9 @@ module.exports = {
     <table class="table table-striped table-hover" style="margin-top: 20px;">\
       <thead>\
         <tr>\
-          <th class="col-sm-5">{{ $t("users.name") }}</th>\
-          <th class="col-sm-4">{{ $t("users.mail") }}</th>\
-          <th class="col-sm-1">{{ $t("users.admin") }}</th>\
+          <th class="col-sm-5"><a @click="order(\'name\')">{{ $t("users.name") }}</a></th>\
+          <th class="col-sm-4"><a @click="order(\'mail\')">{{ $t("users.mail") }}</a></th>\
+          <th class="col-sm-1"><a @click="order(\'admin\')">{{ $t("users.admin") }}</a></th>\
           <th class="col-sm-2"></th>\
         </tr>\
       </thead>\
@@ -55,6 +56,15 @@ module.exports = {
     });
   },
   methods: {
+    order: function (key) {
+      this.users.sort((a, b) => {
+        var obj1 = (typeof a[key] === 'string' || a[key] instanceof String) ? a[key].toLowerCase() : a[key];
+        var obj2 = (typeof b[key] === 'string' || b[key] instanceof String) ? b[key].toLowerCase() : b[key];
+
+        return this.descending ? obj1 <= obj2 : obj1 > obj2;
+      });
+      this.descending = !this.descending;
+    },
     canDelete: user => {
       return User.getUser() === user.name;
     },
